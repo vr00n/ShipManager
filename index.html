@@ -29,11 +29,11 @@
         const BarChart2 = ({className}) => <Icon className={className}><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></Icon>;
         const AlertTriangle = ({className}) => <Icon className={className}><path d="m21.73 18-8-14a2 2 0 0 0-3.46 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></Icon>;
         const ClipboardList = ({className}) => <Icon className={className}><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></Icon>;
-        const Bell = ({className}) => <Icon className={className}><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></Icon>;
-        const ArrowLeft = ({className}) => <Icon className={className}><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></Icon>;
-        const Upload = ({className}) => <Icon className={className}><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></Icon>;
-        const Download = ({className}) => <Icon className={className}><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></Icon>;
-
+        const Home = ({className}) => <Icon className={className}><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></Icon>;
+        const FileText = ({className}) => <Icon className={className}><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></Icon>;
+        const ShoppingCart = ({className}) => <Icon className={className}><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></Icon>;
+        const Cog = ({className}) => <Icon className={className}><path d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16z"/><path d="M12 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/><path d="M12 2v2"/><path d="M12 22v-2"/><path d="m17 20.66-1-1.73"/><path d="m7 3.34 1 1.73"/><path d="m17 3.34-1 1.73"/><path d="m7 20.66 1-1.73"/><path d="M2 12h2"/><path d="M22 12h-2"/><path d="m3.34 7 1.73 1"/><path d="m20.66 17-1.73-1"/><path d="m3.34 17 1.73-1"/><path d="m20.66 7-1.73 1"/></Icon>;
+        
         // --- Data Generation Utility ---
         const generateSampleData = () => {
             const vesselNames = [ "Oceanic Voyager", "Starlight Mariner", "Neptune's Chariot", "Coastal Pioneer", "Arctic Tern", "Southern Cross", "Pacific Wanderer", "Atlantic Sprinter", "Indus Trader", "Caribbean Queen", "Boreal Carrier", "Equinox Drifter", "Solaris Freighter", "Lunar Transporter", "Polaris Explorer" ];
@@ -49,7 +49,7 @@
                 for (let j = 120; j >= 0; j--) {
                     const date = subDays(today, j);
                     const dateStr = format(date, 'YYYY-MM-DD');
-                    performance.push({ id: `p${pId++}`, vesselId: v.id, date: dateStr, speed: 12 + Math.random() * 2, fuelConsumption: 25 + Math.random() * 5, fuelDeviation: -2 + Math.random() * 4, availability: Math.random() > 0.02 ? 100 : 0 });
+                    performance.push({ id: `p${pId++}`, vesselId: v.id, date: dateStr, speed: 12 + Math.random() * 2, fuelConsumption: 25 + Math.random() * 5, fuelDeviation: -2 + Math.random() * 4, availability: Math.random() > 0.02 ? 100 : 0, engineStatus: 'Normal', remarks: 'No issues' });
                     engine.push({ id: `e${eId++}`, vesselId: v.id, date: dateStr, exhaustTemp: 350 + Math.random() * 25, turboRpm: 18000 + Math.random() * 500, lubeOilPressure: 4.2 + Math.random() * 0.6 });
                 }
                 for(let k = 0; k < 5; k++) {
@@ -62,24 +62,24 @@
                     const isOpen = Math.random() > 0.4;
                     issues.push({ id: `i${iId++}`, vesselId: v.id, issue: `Minor Leak in System ${l+1}`, reportedDate, resolvedDate: isOpen ? null : format(subDays(today, Math.random() * 30), 'YYYY-MM-DD'), status: isOpen ? 'Open' : 'Closed', priority: 'Medium' });
                 }
-                spares.push({ id: `s${sId++}`, vesselId: v.id, item: 'Main Engine Filters', quantity: 10, status: 'PO Raised', poNumber: `PO-2025-${100+sId}` });
+                spares.push({ id: `s${sId++}`, vesselId: v.id, item: `PD #${1000+sId}`, quantity: 10, status: ['Pending', 'Confirmed', 'Delivered'][sId % 3], poNumber: `PO-2025-${100+sId}` });
                 surveys.push({ id: `su${suId++}`, vesselId: v.id, name: 'Annual Safety Survey', dueDate: format(subDays(today, -60), 'YYYY-MM-DD'), status: 'Scheduled' });
                 if (i % 4 === 0) {
                     surveys.push({ id: `su${suId++}`, vesselId: v.id, name: 'Underwater Inspection (UWILD)', dueDate: format(subDays(today, -40), 'YYYY-MM-DD'), status: 'Requires Planning' });
                 }
             });
 
-            const kpis = [ { key: 'fleetAvailability', value: 98.5, type: 'number' }, { key: 'avgFuelDiff', value: 2.1, type: 'number' }, { key: 'improvementSuggestion1', value: 'Review high fuel deviation on short sea routes.', type: 'string' }, { key: 'improvementSuggestion2', value: 'Increase stock of common spares for Polaris class vessels.', type: 'string' } ];
+            const kpis = [ { key: 'fleetAvailability', value: 98.5, type: 'number' }, { key: 'avgFuelDiff', value: 2.1, type: 'number' } ];
             return { vessels, performance, maintenance, spares, surveys, engine, issues, kpis };
         };
         
-        const Card = ({ children, className = '', onClick }) => <div onClick={onClick} className={`bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden ${className} ${onClick ? 'cursor-pointer hover:shadow-lg hover:ring-2 hover:ring-blue-500 transition' : ''}`}>{children}</div>;
-        const CardHeader = ({ title, icon, action }) => <div className="p-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center flex-wrap gap-2"><div className="flex items-center space-x-3">{icon}<h3 className="text-lg font-semibold text-gray-800 dark:text-gray-100">{title}</h3></div>{action && <div>{action}</div>}</div>;
+        const Card = ({ children, className = '' }) => <div className={`bg-white rounded-lg shadow-sm overflow-hidden ${className}`}>{children}</div>;
+        const CardHeader = ({ title, icon, action }) => <div className="p-4 border-b border-gray-200 flex justify-between items-center"><h3 className="text-md font-semibold text-gray-700">{title}</h3>{action}</div>;
         const CardContent = ({ children, className = '' }) => <div className={`p-4 ${className}`}>{children}</div>;
-        const StatusBadge = ({ status }) => { const statusClasses = { Overdue: 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200', 'Requires Planning': 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200', Upcoming: 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200', Scheduled: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200', Open: 'bg-pink-100 text-pink-800 dark:bg-pink-900 dark:text-pink-200', Closed: 'bg-gray-200 text-gray-700 dark:bg-gray-600 dark:text-gray-300', High: 'bg-red-100 text-red-800', Medium: 'bg-yellow-100 text-yellow-800', Low: 'bg-green-100 text-green-800' }; return <span className={`px-2 py-1 text-xs font-medium rounded-full ${statusClasses[status] || 'bg-gray-200 text-gray-800'}`}>{status}</span>; };
-        const TableWrapper = ({ children }) => <div className="overflow-x-auto"><table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">{children}</table></div>;
-        const THead = ({ children }) => <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">{children}</thead>;
-        const TRow = ({ children }) => <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">{children}</tr>;
+        const StatusBadge = ({ status }) => { const statusClasses = { Overdue: 'bg-red-100 text-red-800', Pending: 'bg-yellow-100 text-yellow-800', Confirmed: 'bg-blue-100 text-blue-800', Delivered: 'bg-green-100 text-green-800', Upcoming: 'bg-blue-100 text-blue-800', Scheduled: 'bg-green-100 text-green-800', 'Requires Planning': 'bg-yellow-100 text-yellow-800' }; return <span className={`px-2 py-1 text-xs font-medium rounded-full ${statusClasses[status] || 'bg-gray-200 text-gray-800'}`}>{status}</span>; };
+        const TableWrapper = ({ children }) => <div className="overflow-x-auto"><table className="w-full text-sm text-left text-gray-500">{children}</table></div>;
+        const THead = ({ children }) => <thead className="text-xs text-gray-700 uppercase bg-gray-50">{children}</thead>;
+        const TRow = ({ children, className='' }) => <tr className={`bg-white border-b ${className}`}>{children}</tr>;
         const Th = ({ children }) => <th scope="col" className="px-6 py-3">{children}</th>;
         const Td = ({ children, className='' }) => <td className={`px-6 py-4 ${className}`}>{children}</td>;
 
@@ -96,136 +96,204 @@
 
             return <canvas ref={canvasRef}></canvas>;
         };
-        
-        const DataManagement = ({ onDataLoaded, onBackToDashboard, sampleData }) => {
-            const handleLoadData = () => {
-                onDataLoaded(sampleData);
-            };
+
+        const Sidebar = ({ activeView, setView }) => {
+            const navItems = [
+                { id: 'dashboard', label: 'Dashboard', icon: <Home className="w-5 h-5"/> },
+                { id: 'vesselReports', label: 'Vessel Reports', icon: <FileText className="w-5 h-5"/> },
+                { id: 'maintenance', label: 'Planned Maintenance', icon: <Wrench className="w-5 h-5"/> },
+                { id: 'purchaseOrders', label: 'Purchase Orders', icon: <ShoppingCart className="w-5 h-5"/> },
+                { id: 'classSurveys', label: 'Class Surveys', icon: <ClipboardList className="w-5 h-5"/> },
+                { id: 'enginePerformance', label: 'Engine Performance', icon: <Cog className="w-5 h-5"/> },
+            ];
 
             return (
-                <div className="max-w-4xl mx-auto">
-                     {onBackToDashboard && (
-                        <div className="text-right mb-4">
-                            <button onClick={onBackToDashboard} className="px-4 py-2 bg-gray-200 text-gray-800 font-semibold rounded-lg shadow-sm hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600">
-                                &larr; Back to Dashboard
-                            </button>
-                        </div>
-                    )}
+                <aside className="w-64 bg-[#2c3e50] text-white flex flex-col flex-shrink-0">
+                    <div className="p-6 text-2xl font-bold border-b border-gray-700">ShipManager</div>
+                    <nav className="flex-1 p-4">
+                        <ul>
+                            {navItems.map(item => (
+                                <li key={item.id}>
+                                    <a href="#" onClick={(e) => { e.preventDefault(); setView(item.id); }}
+                                       className={`flex items-center space-x-3 p-3 rounded-lg transition-colors ${activeView === item.id ? 'bg-blue-500' : 'hover:bg-gray-700'}`}>
+                                        {item.icon}
+                                        <span>{item.label}</span>
+                                    </a>
+                                </li>
+                            ))}
+                        </ul>
+                    </nav>
+                </aside>
+            );
+        };
+        
+        const DashboardView = ({ shipData }) => {
+            const [selectedVesselId, setSelectedVesselId] = useState(shipData.vessels[0].id);
+            
+            const featuredVessel = shipData.vessels.find(v => v.id === selectedVesselId);
+            const latestReport = shipData.performance.filter(p => p.vesselId === selectedVesselId).sort((a,b) => new Date(b.date) - new Date(a.date))[0];
+            const maintenanceTasks = shipData.maintenance.filter(m => new Date(m.dueDate) >= new Date()).sort((a,b) => new Date(a.dueDate) - new Date(b.dueDate)).slice(0, 4);
+            const purchaseOrders = shipData.spares.sort((a,b) => b.id.localeCompare(a.id)).slice(0, 3);
+            const classSurveys = shipData.surveys.filter(s => new Date(s.dueDate) >= new Date()).sort((a,b) => new Date(a.dueDate) - new Date(b.dueDate)).slice(0, 2);
+            const enginePerformanceData = shipData.engine.filter(e => e.vesselId === selectedVesselId).slice(-30);
+
+            const chartData = {
+                labels: enginePerformanceData.map(d => format(new Date(d.date), 'MM-DD')),
+                datasets: [{
+                    label: 'Exhaust Temp',
+                    data: enginePerformanceData.map(d => d.exhaustTemp),
+                    borderColor: '#3498db',
+                    tension: 0.3,
+                    pointRadius: 0,
+                }]
+            };
+            const chartOptions = { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { display: false }, y: { display: false } } };
+
+            if (!latestReport) {
+                return <div>Loading report...</div>;
+            }
+
+            return (
+                <div className="space-y-6">
                     <Card>
-                        <CardHeader title="Data Management" icon={<Upload className="w-6 h-6 text-gray-500" />} />
-                        <CardContent className="space-y-6">
-                            <p className="text-sm text-gray-600 dark:text-gray-400">
-                                This application runs on sample data. Click the button below to load the data and view the dashboard. In a real application, this screen would allow you to upload your own CSV files.
-                            </p>
-                            <div className="text-center pt-4">
-                                <button
-                                    onClick={handleLoadData}
-                                    className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                                >
-                                    Load Sample Data & View Dashboard
-                                </button>
+                        <CardHeader 
+                            title="Daily Vessel Report" 
+                            action={
+                                <select value={selectedVesselId} onChange={e => setSelectedVesselId(e.target.value)} className="block w-48 p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                                    {shipData.vessels.map(v => <option key={v.id} value={v.id}>{v.name}</option>)}
+                                </select>
+                            }
+                        />
+                        <CardContent>
+                            <div className="grid grid-cols-2 gap-x-8 gap-y-4">
+                                <div className="font-semibold text-gray-600">Vessel</div><div>{featuredVessel.name}</div>
+                                <div className="font-semibold text-gray-600">Date</div><div>{format(new Date(latestReport.date), 'MMMM DD')}</div>
+                                <div className="font-semibold text-gray-600">Speed (kn)</div><div>{latestReport.speed.toFixed(1)}</div>
+                                <div className="font-semibold text-gray-600">Fuel Consumption (mt)</div><div>{latestReport.fuelConsumption.toFixed(1)}</div>
+                                <div className="font-semibold text-gray-600">Engine Status</div><div>{latestReport.engineStatus}</div>
+                                <div className="font-semibold text-gray-600">Remarks</div><div>{latestReport.remarks}</div>
                             </div>
                         </CardContent>
                     </Card>
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <Card>
+                            <CardHeader title="Planned Maintenance" />
+                            <CardContent>
+                                <ul className="space-y-3">
+                                    {maintenanceTasks.map(task => (
+                                        <li key={task.id} className="flex justify-between items-center text-gray-700 border-b pb-2 last:border-b-0">
+                                            <span>{task.task}</span>
+                                            <span className={`font-semibold ${new Date(task.dueDate) < new Date() ? 'text-red-500' : ''}`}>{format(new Date(task.dueDate), 'MMM DD')}</span>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </CardContent>
+                        </Card>
+                         <Card>
+                            <CardHeader title="Upcoming Class Surveys" />
+                            <CardContent>
+                                <ul className="space-y-3">
+                                    {classSurveys.map(survey => (
+                                        <li key={survey.id} className="flex justify-between items-center text-gray-700 border-b pb-2 last:border-b-0">
+                                            <span>{survey.name}</span>
+                                            <span className="font-semibold">{format(new Date(survey.dueDate), 'MMM DD')}</span>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </CardContent>
+                        </Card>
+                        <Card>
+                            <CardHeader title="Recent Purchase Orders" />
+                            <CardContent>
+                                <ul className="space-y-3">
+                                    {purchaseOrders.map(po => (
+                                        <li key={po.id} className="flex justify-between items-center text-gray-700 border-b pb-2 last:border-b-0">
+                                            <span>{po.item}</span>
+                                            <StatusBadge status={po.status} />
+                                        </li>
+                                    ))}
+                                </ul>
+                            </CardContent>
+                        </Card>
+                        <Card>
+                            <CardHeader title={`Engine Performance - ${featuredVessel.name}`} />
+                            <CardContent>
+                                <div className="h-32">
+                                    <ChartJsComponent type="line" data={chartData} options={chartOptions} />
+                                </div>
+                            </CardContent>
+                        </Card>
+                    </div>
                 </div>
             );
         };
 
-        const Dashboard = ({ shipData, onSelectVessel, onSelectKpi }) => {
-            const { kpis, issues, maintenance, surveys, vessels } = shipData;
-            const kpiData = kpis.reduce((acc, item) => { if(item.key.startsWith('improvementSuggestion')) { if(!acc.improvementSuggestions) acc.improvementSuggestions = []; acc.improvementSuggestions.push(item.value); } else { acc[item.key] = item.value; } return acc; }, { improvementSuggestions: [] });
-            const overdueMaintenanceCount = maintenance.filter(t => t.status === 'Overdue' && !t.completedDate).length;
-            const openIssuesCount = issues.filter(i => i.status === 'Open').length;
-            const criticalSurveys = surveys.filter(s => { const dueDate = new Date(s.dueDate); const today = new Date('2025-08-08T10:00:00Z'); const diffDays = Math.ceil((dueDate - today) / (1000 * 60 * 60 * 24)); return s.name.includes('UWILD') && diffDays <= 45 && diffDays > 0; });
+        const FleetDataView = ({ title, data, headers, rowRenderer, vessels }) => {
+            const [filter, setFilter] = useState('all');
+            const filteredData = filter === 'all' ? data : data.filter(item => item.vesselId === filter);
 
-            return ( <div className="space-y-6"> {criticalSurveys.length > 0 && ( <div className="bg-yellow-50 dark:bg-yellow-900/20 border-l-4 border-yellow-400 p-4 rounded-md flex items-center"> <Bell className="h-5 w-5 text-yellow-400 mr-3 flex-shrink-0" /> <p className="text-sm text-yellow-700 dark:text-yellow-200"> Critical Survey Alert: {criticalSurveys.length} vessel(s) require UWILD survey planning within 45 days. </p> </div> )} <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"> <Card onClick={() => onSelectKpi('availability')}> <CardContent className="flex items-center space-x-4"><div className="p-3 rounded-full bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300"><Ship className="w-6 h-6" /></div><div><p className="text-sm text-gray-500 dark:text-gray-400">Fleet Availability</p><p className="text-2xl font-bold text-gray-800 dark:text-gray-100">{kpiData.fleetAvailability}%</p></div></CardContent> </Card> <Card onClick={() => onSelectKpi('overdueMaintenance')}> <CardContent className="flex items-center space-x-4"><div className="p-3 rounded-full bg-red-100 dark:bg-red-900 text-red-600 dark:text-red-300"><Wrench className="w-6 h-6" /></div><div><p className="text-sm text-gray-500 dark:text-gray-400">Overdue Maintenance</p><p className="text-2xl font-bold text-gray-800 dark:text-gray-100">{overdueMaintenanceCount}</p></div></CardContent> </Card> <Card onClick={() => onSelectKpi('fuelDeviation')}> <CardContent className="flex items-center space-x-4"><div className="p-3 rounded-full bg-yellow-100 dark:bg-yellow-900 text-yellow-600 dark:text-yellow-300"><BarChart2 className="w-6 h-6" /></div><div><p className="text-sm text-gray-500 dark:text-gray-400">Avg. Fuel Deviation</p><p className="text-2xl font-bold text-gray-800 dark:text-gray-100">+{kpiData.avgFuelDiff}%</p></div></CardContent> </Card> <Card onClick={() => onSelectKpi('openIssues')}> <CardContent className="flex items-center space-x-4"><div className="p-3 rounded-full bg-pink-100 dark:bg-pink-900 text-pink-600 dark:text-pink-300"><AlertTriangle className="w-6 h-6" /></div><div><p className="text-sm text-gray-500 dark:text-gray-400">Open Technical Issues</p><p className="text-2xl font-bold text-gray-800 dark:text-gray-100">{openIssuesCount}</p></div></CardContent> </Card> </div> <Card> <CardHeader title="Vessel Fleet" icon={<Ship className="w-5 h-5 text-gray-500" />} /> <CardContent> <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4"> {vessels.map(v => ( <div key={v.id} onClick={() => onSelectVessel(v)} className="p-4 border dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer transition"> <p className="font-bold text-lg text-blue-600 dark:text-blue-400 truncate" title={v.name}>{v.name}</p> <p className="text-sm text-gray-500 dark:text-gray-400">IMO: {v.imo}</p> </div> ))} </div> </CardContent> </Card> </div> );
-        };
-
-        const KpiDetailView = ({ kpiKey, shipData, onBack }) => {
-            const [timeFilter, setTimeFilter] = useState('lastMonth');
-            const today = new Date('2025-08-08T10:00:00Z');
-            const timeRanges = { lastWeek: { start: startOfWeek(subDays(today, 7), { weekStartsOn: 1 }), end: endOfWeek(subDays(today, 7), { weekStartsOn: 1 }) }, lastMonth: { start: startOfMonth(subMonths(today, 1)), end: endOfMonth(subMonths(today, 1)) }, lastQuarter: { start: startOfQuarter(subQuarters(today, 1)), end: endOfQuarter(subQuarters(today, 1)) }, monthToDate: { start: startOfMonth(today), end: today }, };
-            const { start, end } = timeRanges[timeFilter];
-            const filterDataByDate = (data, dateKey) => data.filter(item => { const itemDate = new Date(item[dateKey]); return itemDate >= start && itemDate <= end; });
-            const getKpiDetails = () => { switch (kpiKey) { case 'fuelDeviation': { const performanceData = filterDataByDate(shipData.performance, 'date'); const aggregatedByDate = performanceData.reduce((acc, d) => { acc[d.date] = acc[d.date] || { totalDeviation: 0, count: 0 }; acc[d.date].totalDeviation += d.fuelDeviation; acc[d.date].count++; return acc; }, {}); const chartData = Object.keys(aggregatedByDate).map(date => ({ date, avgDeviation: (aggregatedByDate[date].totalDeviation / aggregatedByDate[date].count).toFixed(2), })).sort((a,b) => new Date(a.date) - new Date(b.date)); return { title: 'Fuel Deviation Analysis', chartType: 'line', chartData, tableData: performanceData.sort((a,b) => new Date(b.date) - new Date(a.date)), tableHeaders: ['Date', 'Vessel', 'Deviation (%)'], tableRow: d => <TRow key={d.id}><Td>{d.date}</Td><Td>{shipData.vessels.find(v => v.id === d.vesselId)?.name}</Td><Td className={d.fuelDeviation > 0 ? 'text-red-500' : 'text-green-500'}>{d.fuelDeviation > 0 ? `+${d.fuelDeviation.toFixed(2)}` : d.fuelDeviation.toFixed(2)}%</Td></TRow> }; } case 'overdueMaintenance': { const maintenanceData = shipData.maintenance.filter(item => item.status === 'Overdue' && !item.completedDate); const aggregatedByVessel = maintenanceData.reduce((acc, d) => { acc[d.vesselId] = (acc[d.vesselId] || 0) + 1; return acc; }, {}); const chartData = Object.keys(aggregatedByVessel).map(vesselId => ({ name: shipData.vessels.find(v => v.id === vesselId)?.name, count: aggregatedByVessel[vesselId] })); return { title: 'Overdue Maintenance', chartType: 'bar', chartData, tableData: maintenanceData.sort((a,b) => new Date(a.dueDate) - new Date(b.dueDate)), tableHeaders: ['Due Date', 'Vessel', 'Task', 'Priority'], tableRow: d => <TRow key={d.id}><Td>{d.dueDate}</Td><Td>{shipData.vessels.find(v => v.id === d.vesselId)?.name}</Td><Td>{d.task}</Td><Td><StatusBadge status={d.priority}/></Td></TRow> }; } case 'openIssues': { const issuesData = shipData.issues.filter(i => i.status === 'Open'); const aggregatedByVessel = issuesData.reduce((acc, d) => { acc[d.vesselId] = (acc[d.vesselId] || 0) + 1; return acc; }, {}); const chartData = Object.keys(aggregatedByVessel).map(vesselId => ({ name: shipData.vessels.find(v => v.id === vesselId)?.name, count: aggregatedByVessel[vesselId] })); return { title: 'Open Technical Issues', chartType: 'bar', chartData, tableData: issuesData.sort((a,b) => new Date(b.reportedDate) - new Date(a.reportedDate)), tableHeaders: ['Reported', 'Vessel', 'Issue', 'Status'], tableRow: d => <TRow key={d.id}><Td>{d.reportedDate}</Td><Td>{shipData.vessels.find(v => v.id === d.vesselId)?.name}</Td><Td>{d.issue}</Td><Td><StatusBadge status={d.status}/></Td></TRow> }; } case 'availability': { const performanceData = filterDataByDate(shipData.performance, 'date'); const offHireDays = performanceData.filter(d => d.availability < 100); const aggregatedByVessel = offHireDays.reduce((acc, d) => { acc[d.vesselId] = (acc[d.vesselId] || 0) + 1; return acc; }, {}); const chartData = Object.keys(aggregatedByVessel).map(vesselId => ({ name: shipData.vessels.find(v => v.id === vesselId)?.name, count: aggregatedByVessel[vesselId] })); return { title: 'Fleet Availability (Off-Hire Days)', chartType: 'bar', chartData, tableData: offHireDays.sort((a,b) => new Date(b.date) - new Date(a.date)), tableHeaders: ['Date', 'Vessel', 'Status'], tableRow: d => <TRow key={d.id}><Td>{d.date}</Td><Td>{shipData.vessels.find(v => v.id === d.vesselId)?.name}</Td><Td><StatusBadge status="Off-Hire"/></Td></TRow> }; } default: return { title: 'Detail View', chartData: [], tableData: [] }; } };
-            const details = getKpiDetails();
-            const chartOptions = { responsive: true, maintainAspectRatio: false, scales: { x: { ticks: { autoSkip: true, maxRotation: 70, minRotation: 45 } }, y: { beginAtZero: true } } };
-            const chartDataConfig = {
-                labels: details.chartData.map(d => d.name || d.date),
-                datasets: [{
-                    label: details.title,
-                    data: details.chartData.map(d => d.count || d.avgDeviation),
-                    backgroundColor: 'rgba(75, 192, 192, 0.6)',
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    borderWidth: 1,
-                    fill: details.chartType === 'line' ? false : true,
-                    tension: 0.1
-                }]
-            };
-
-            return ( <div> <button onClick={onBack} className="mb-4 text-blue-600 hover:underline flex items-center"><ArrowLeft className="w-4 h-4 mr-1"/> Back to Fleet Dashboard</button> <h2 className="text-3xl font-bold mb-4 text-gray-800 dark:text-gray-100">{details.title}</h2> <Card> <CardHeader title="Analysis" action={ kpiKey !== 'overdueMaintenance' && kpiKey !== 'openIssues' && <div className="flex space-x-1 bg-gray-200 dark:bg-gray-700 p-1 rounded-lg"> {Object.keys(timeRanges).map(filter => <button key={filter} onClick={() => setTimeFilter(filter)} className={`px-3 py-1 text-sm font-medium rounded-md ${timeFilter === filter ? 'bg-white dark:bg-gray-900 text-blue-600 shadow' : 'text-gray-600 dark:text-gray-300'}`}>{filter.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}</button>)} </div> }/> <CardContent> {details.chartData.length > 0 ? ( <div className="relative h-72"> <ChartJsComponent type={details.chartType} data={chartDataConfig} options={chartOptions} /> </div> ) : <p className="text-center text-gray-500 py-12">No data available for this view or period.</p>} </CardContent> </Card> <div className="mt-6"><Card><CardHeader title="Detailed Records" /><TableWrapper><THead><tr>{details.tableHeaders?.map(h => <Th key={h}>{h}</Th>)}</tr></THead><tbody>{details.tableData.map(d => details.tableRow(d))}</tbody></TableWrapper>{details.tableData.length === 0 && <p className="text-center text-gray-500 p-8">No records found for the selected period.</p>}</Card></div> </div> );
-        };
-
-        const VesselDetail = ({ vessel, shipData, onBack }) => {
-            const [activeTab, setActiveTab] = useState('performance');
-            const vesselData = Object.keys(shipData).reduce((acc, key) => { if (Array.isArray(shipData[key]) && shipData[key][0]?.vesselId) { acc[key] = shipData[key].filter(d => d.vesselId === vessel.id); } return acc; }, {});
-            const tabs = [ { id: 'performance', label: 'Performance', icon: <BarChart2 className="w-5 h-5"/>, data: vesselData.performance, headers: ['Date', 'Speed', 'Fuel Cons.'], row: d => <TRow key={d.id}><Td>{d.date}</Td><Td>{d.speed.toFixed(1)} kn</Td><Td>{d.fuelConsumption.toFixed(1)} MT</Td></TRow> }, { id: 'maintenance', label: 'Maintenance', icon: <Wrench className="w-5 h-5"/>, data: vesselData.maintenance, headers: ['Task', 'Due', 'Status'], row: d => <TRow key={d.id}><Td>{d.task}</Td><Td>{d.dueDate}</Td><Td><StatusBadge status={d.status}/></Td></TRow> }, { id: 'issues', label: 'Issues', icon: <AlertTriangle className="w-5 h-5"/>, data: vesselData.issues, headers: ['Reported', 'Issue', 'Status'], row: d => <TRow key={d.id}><Td>{d.reportedDate}</Td><Td>{d.issue}</Td><Td><StatusBadge status={d.status}/></Td></TRow> }, { id: 'surveys', label: 'Surveys', icon: <ClipboardList className="w-5 h-5"/>, data: vesselData.surveys, headers: ['Survey', 'Due', 'Status'], row: d => <TRow key={d.id}><Td>{d.name}</Td><Td>{d.dueDate}</Td><Td><StatusBadge status={d.status}/></Td></TRow> }, ];
-            const activeTabData = tabs.find(t => t.id === activeTab);
-            return ( <div> <button onClick={onBack} className="mb-4 text-blue-600 hover:underline flex items-center"><ArrowLeft className="w-4 h-4 mr-1"/> Back to Fleet Dashboard</button> <h2 className="text-3xl font-bold mb-1 text-gray-800 dark:text-gray-100">{vessel.name}</h2> <p className="text-md text-gray-500 dark:text-gray-400 mb-6">IMO: {vessel.imo} | {vessel.type}</p> <Card> <div className="border-b border-gray-200 dark:border-gray-700"><nav className="-mb-px flex space-x-6 px-6 overflow-x-auto" aria-label="Tabs">{tabs.map(tab => <button key={tab.id} onClick={() => setActiveTab(tab.id)} className={`${activeTab === tab.id ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:hover:text-gray-200'} whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm flex items-center space-x-2`}>{tab.icon}<span>{tab.label}</span></button>)}</nav></div> <CardContent> <TableWrapper><THead><tr>{activeTabData.headers.map(h => <Th key={h}>{h}</Th>)}</tr></THead><tbody>{activeTabData.data.map(d => activeTabData.row(d))}</tbody></TableWrapper> </CardContent> </Card> </div> );
+            return (
+                <Card>
+                    <CardHeader title={title} action={
+                        <select value={filter} onChange={e => setFilter(e.target.value)} className="block w-48 p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                            <option value="all">All Vessels</option>
+                            {vessels.map(v => <option key={v.id} value={v.id}>{v.name}</option>)}
+                        </select>
+                    }/>
+                    <CardContent>
+                        <TableWrapper>
+                            <THead><tr>{headers.map(h => <Th key={h}>{h}</Th>)}</tr></THead>
+                            <tbody>{filteredData.map(item => rowRenderer(item))}</tbody>
+                        </TableWrapper>
+                    </CardContent>
+                </Card>
+            );
         };
 
         const App = () => {
             const [shipData, setShipData] = useState(null);
-            const [view, setView] = useState('uploader'); // Start at the uploader
-            const [activeVessel, setActiveVessel] = useState(null);
-            const [activeKpi, setActiveKpi] = useState(null);
-
-            const handleDataLoaded = (data) => {
-                setShipData(data);
-                setView('dashboard');
-            };
-
-            const handleSelectVessel = (vessel) => { setActiveVessel(vessel); setView('vessel'); };
-            const handleSelectKpi = (kpiKey) => { setActiveKpi(kpiKey); setView('kpiDetail'); };
-            const handleBackToDashboard = () => { setActiveVessel(null); setActiveKpi(null); setView('dashboard'); };
-            const handleGoToUploader = () => { setView('uploader'); };
+            const [view, setView] = useState('dashboard'); 
             
+            useEffect(() => { setShipData(generateSampleData()); }, []);
+
             const renderView = () => {
+                if (!shipData) return <div className="text-center p-12">Loading data...</div>;
                 switch (view) {
-                    case 'uploader':
-                        return <DataManagement onDataLoaded={handleDataLoaded} onBackToDashboard={shipData ? handleBackToDashboard : null} sampleData={generateSampleData()} />;
-                    case 'vessel': 
-                        return <VesselDetail vessel={activeVessel} shipData={shipData} onBack={handleBackToDashboard} />;
-                    case 'kpiDetail': 
-                        return <KpiDetailView kpiKey={activeKpi} shipData={shipData} onBack={handleBackToDashboard} />;
                     case 'dashboard':
+                        return <DashboardView shipData={shipData} />;
+                    case 'vesselReports':
+                        return <FleetDataView title="Vessel Reports" data={shipData.performance} headers={['Date', 'Vessel', 'Speed (kn)', 'Fuel (mt)']} vessels={shipData.vessels} rowRenderer={item => <TRow key={item.id}><Td>{item.date}</Td><Td>{shipData.vessels.find(v=>v.id===item.vesselId)?.name}</Td><Td>{item.speed.toFixed(1)}</Td><Td>{item.fuelConsumption.toFixed(1)}</Td></TRow>} />;
+                     case 'maintenance':
+                        return <FleetDataView title="Planned Maintenance" data={shipData.maintenance} headers={['Vessel', 'Task', 'Due Date', 'Status']} vessels={shipData.vessels} rowRenderer={item => <TRow key={item.id}><Td>{shipData.vessels.find(v=>v.id===item.vesselId)?.name}</Td><Td>{item.task}</Td><Td>{item.dueDate}</Td><Td><StatusBadge status={item.status}/></Td></TRow>} />;
+                    case 'purchaseOrders':
+                        return <FleetDataView title="Purchase Orders" data={shipData.spares} headers={['Vessel', 'Item', 'PO Number', 'Status']} vessels={shipData.vessels} rowRenderer={item => <TRow key={item.id}><Td>{shipData.vessels.find(v=>v.id===item.vesselId)?.name}</Td><Td>{item.item}</Td><Td>{item.poNumber}</Td><Td><StatusBadge status={item.status}/></Td></TRow>} />;
+                    case 'classSurveys':
+                        return <FleetDataView title="Class Surveys" data={shipData.surveys} headers={['Vessel', 'Survey', 'Due Date', 'Status']} vessels={shipData.vessels} rowRenderer={item => <TRow key={item.id}><Td>{shipData.vessels.find(v=>v.id===item.vesselId)?.name}</Td><Td>{item.name}</Td><Td>{item.dueDate}</Td><Td><StatusBadge status={item.status}/></Td></TRow>} />;
+                    case 'enginePerformance':
+                        return <FleetDataView title="Engine Performance" data={shipData.engine} headers={['Date', 'Vessel', 'Exhaust Temp', 'Turbo RPM']} vessels={shipData.vessels} rowRenderer={item => <TRow key={item.id}><Td>{item.date}</Td><Td>{shipData.vessels.find(v=>v.id===item.vesselId)?.name}</Td><Td>{item.exhaustTemp.toFixed(0)}</Td><Td>{item.turboRpm.toFixed(0)}</Td></TRow>} />;
                     default: 
-                        return <Dashboard shipData={shipData} onSelectVessel={handleSelectVessel} onSelectKpi={handleSelectKpi} />;
+                        return <DashboardView shipData={shipData} />;
                 }
             };
 
             return (
-                <div className="bg-gray-100 dark:bg-gray-900 min-h-screen font-sans text-gray-900 dark:text-gray-200">
-                    <header className="bg-white dark:bg-gray-800 shadow-md sticky top-0 z-40">
-                        <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
-                            <div className="flex justify-between items-center py-4">
-                                <div className="flex items-center space-x-4"><Ship className="w-8 h-8 text-blue-600" /><h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100">Ship Management</h1></div>
-                                <div className="flex items-center space-x-6">
-                                   <button onClick={handleGoToUploader} className="flex items-center space-x-2 text-sm font-medium text-gray-600 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400">
-                                       <Upload className="w-5 h-5" />
-                                       <span>Manage Data</span>
-                                   </button>
-                                   <Bell className="h-6 w-6 text-gray-500 dark:text-gray-400" /><div className="w-8 h-8 bg-gray-300 dark:bg-gray-600 rounded-full"></div>
-                                </div>
+                <div className="bg-[#f0f2f5] min-h-screen font-sans text-gray-900 flex">
+                    <Sidebar activeView={view} setView={setView} />
+                    <div className="flex-1 flex flex-col">
+                        <header className="bg-white shadow-sm p-4 flex justify-between items-center">
+                            <h1 className="text-xl font-bold text-gray-800 capitalize">{view.replace(/([A-Z])/g, ' $1')}</h1>
+                            <div className="text-right">
+                                <p className="font-semibold">John Doe</p>
                             </div>
-                        </div>
-                    </header>
-                    <main className="p-4 sm:p-6 lg:p-8 max-w-screen-xl mx-auto">{renderView()}</main>
+                        </header>
+                        <main className="p-6 overflow-y-auto flex-1">
+                            {renderView()}
+                        </main>
+                    </div>
                 </div>
             );
         }
         
-        // This function will poll until all libraries are loaded, then initialize the app.
         function runWhenReady() {
             if (window.React && window.ReactDOM && window.Chart && window.dateFns) {
                 const container = document.getElementById('root');
